@@ -6,7 +6,7 @@ library(tidyverse)
 library(ggplot2)
 library(data.table)
 
-setwd("/Users/nguyenmui/Library/CloudStorage/OneDrive-VictoriaUniversityofWellington-STAFF/Roy Mckenzie Centre/MSD Wellbeing/chart")
+setwd("")
 getwd()
 
 ###########################
