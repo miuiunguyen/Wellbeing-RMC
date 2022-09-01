@@ -6,7 +6,7 @@ library(tidyverse)
 library(ggplot2)
 library(data.table)
 
-setwd("")
+setwd("/Users/nguyenmui/Library/CloudStorage/OneDrive-VictoriaUniversityofWellington-STAFF/Roy Mckenzie Centre/MSD Wellbeing/chart")
 getwd()
 
 ###########################
@@ -135,6 +135,25 @@ c6 + labs(x = NULL, y = "Percent",
           caption = "Data Source: IDI data") + theme_bw() + theme(plot.title = element_text(hjust = 0.5)) + 
   theme(legend.position="bottom")+ theme(legend.title = element_blank())
 
+#--------------------------#
+#### Draw line chart 8 #####
+#--------------------------#
+chart_8 <- subset(benefit, benefit == "Main Benefit" &
+                    family_structure == "Single people without dependent children") %>% 
+  pivot_longer(c(`2008`, `2010`,`2012`,`2014`,`2016`,`2018`,`2020`), names_to = "year", values_to = "percentage")
+
+type.labs <- c("Benefit receipt in the past month", "Benefit receipt in the past year", "Benefit receipt 30 of past 36 months")
+names(type.labs) <- c("Benefit in the month of survey", "Benefit in the year of survey","Benefit for 30+ months in last three years from survey")
+
+chart_8 <- chart_8 %>% 
+  mutate(type = fct_relevel(type, c("Benefit in the month of survey", "Benefit in the year of survey","Benefit for 30+ months in last three years from survey")),
+         label = toupper(type))
+c8 <- ggplot(data = chart_8, aes(year, percentage, color = factor(choice,labels=c("No benefit receipt","Benefit receipt")), group = choice)) +
+  geom_line(size=0.7) + geom_point(size=1.7) + facet_grid(~ type, labeller = labeller(type = type.labs)) + ylim(0, 30)
+c8 + labs(x = NULL, y = "Percent",
+          title = "% with not enough money to meet everyday needs by main benefit time period receipt:\n Single people without dependent children",
+          caption = "Data Source: IDI data") + theme_bw() + theme(plot.title = element_text(hjust = 0.5)) + 
+  theme(legend.position="bottom")+ theme(legend.title = element_blank())
 #--------------------------#
 #### Draw line chart 7 #####
 #--------------------------#
@@ -293,3 +312,22 @@ c7 + labs(x = NULL, y = "Percent",
           caption = "Data Source: IDI data") + theme_bw() + theme(plot.title = element_text(hjust = 0.5)) + 
   theme(legend.position="bottom")+ theme(legend.title = element_blank())
 
+#--------------------------#
+#### Draw line chart 8 #####
+#--------------------------#
+chart_8 <- subset(benefit, benefit == "Main Benefit" &
+                    family_structure == "Single people without dependent children") %>% 
+  pivot_longer(c(`2008`, `2010`,`2012`,`2014`,`2016`,`2018`,`2020`), names_to = "year", values_to = "percentage")
+
+type.labs <- c("Benefit receipt in the past month", "Benefit receipt in the past year", "Benefit receipt 30 of past 36 months")
+names(type.labs) <- c("Benefit in the month of survey", "Benefit in the year of survey","Benefit for 30+ months in last three years from survey")
+
+chart_8 <- chart_8 %>% 
+  mutate(type = fct_relevel(type, c("Benefit in the month of survey", "Benefit in the year of survey","Benefit for 30+ months in last three years from survey")),
+         label = toupper(type))
+c8 <- ggplot(data = chart_8, aes(year, percentage, color = factor(choice,labels=c("No benefit receipt","Benefit receipt")), group = choice)) +
+  geom_line(size=0.7) + geom_point(size=1.7) + facet_grid(~ type, labeller = labeller(type = type.labs)) + ylim(60, 80)
+c8 + labs(x = NULL, y = "Percent",
+          title = "% employed by main benefit time period receipt:\n Single people without dependent children",
+          caption = "Data Source: IDI data") + theme_bw() + theme(plot.title = element_text(hjust = 0.5)) + 
+  theme(legend.position="bottom")+ theme(legend.title = element_blank())
